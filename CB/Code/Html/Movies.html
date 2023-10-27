@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Library</title>
+    <style>
+        /* Dark mode styles */
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+        .video-item {
+            border: 1px solid #333;
+            background-color: #333;
+            color: #fff;
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .video-item img {
+            max-width: 100px;
+        }
+        .video-player {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="videos"></div>
+    <div id="videoPlayer" class="video-player">
+        <video controls id="mediaPlayer" style="width: 100%; height: 100%;"></video>
+    </div>
+
+    <script>
+        const videos = [
+            {
+                name: 'Just testing rn',
+                year: '1942',
+                quality: 'SD',
+                icon: 'https://icon.com/icon.jpg',
+                url: 'https://192.testing.mp4',
+            },
+            {
+                name: 'Just testing rn agian but new',
+                year: '3942',
+                quality: 'HD',
+                icon: 'https://icon.com/icon.png',
+                url: 'https://392.testing.mp4',
+            },
+        ];
+
+        // Populate video items
+        const videosContainer = document.getElementById('videos');
+        videos.forEach(video => {
+            const item = document.createElement('div');
+            item.className = 'video-item';
+            item.innerHTML = `
+                <img src="${video.icon}" alt="${video.name}">
+                <div>${video.name} | ${video.year}</div>
+                <div>${video.quality === 'HD' ? 'High Quality' : 'Low Quality'}</div>
+            `;
+            item.addEventListener('click', () => openVideoPlayer(video.url));
+            videosContainer.appendChild(item);
+        });
+
+        // Video player
+        const videoPlayer = document.getElementById('videoPlayer');
+        const mediaPlayer = document.getElementById('mediaPlayer');
+
+        function openVideoPlayer(videoUrl) {
+            mediaPlayer.src = videoUrl;
+            videoPlayer.style.display = 'block';
+            videoPlayer.requestFullscreen();
+            mediaPlayer.play();
+        }
+
+        mediaPlayer.addEventListener('ended', () => {
+            videoPlayer.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
